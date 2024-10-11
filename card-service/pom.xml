@@ -11,6 +11,7 @@
     <groupId>com.shadril238</groupId>
     <artifactId>card-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>card-service</name>
     <description>Microservice for Card Service</description>
     <url/>
@@ -80,6 +81,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <!-- CLI Command : mvn compile jib:dockerBuild -->
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <to>
+                        <image>shadril238/${project.artifactId}:s4</image>
+                    </to>
+                </configuration>
             </plugin>
         </plugins>
     </build>
