@@ -89,7 +89,7 @@
                 <version>3.2.1</version>
                 <configuration>
                     <to>
-                        <image>shadril238/${project.artifactId}:s4</image>
+                        <image>shadril238/${project.artifactId}:s5</image>
                     </to>
                 </configuration>
             </plugin>

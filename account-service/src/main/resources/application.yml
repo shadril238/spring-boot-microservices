@@ -26,3 +26,6 @@ spring:
 #  swagger-ui:
 #    enabled: true
 ##    path: /swagger-ui.html
+
+build:
+  version: "1.0"
