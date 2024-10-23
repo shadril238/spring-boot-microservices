@@ -1,24 +1,30 @@
 spring:
-    application:
-        name: "config-server"
-    profiles:
-#        active: native
-        active: git
-    cloud:
-        config:
-            server:
-#                native:
-#                    search-locations: "classpath:/config"
-#                    search-locations: "file:///home//bs00545//Desktop//spring-boot-microservices//config"  # Path to the directory where the configuration files are stored
-                git:
-                    uri: "https://github.com/shadril238/spring-boot-microservices-eazybank-config.git"
-                    default-label: "main"
-                    timeout: 5
-                    clone-on-start: true
-                    force-pull: true
+  application:
+    name: "config-server"
+  profiles:
+    #        active: native
+    active: git
+  cloud:
+    config:
+      server:
+        #                native:
+        #                    search-locations: "classpath:/config"
+        #                    search-locations: "file:///home//bs00545//Desktop//spring-boot-microservices//config"  # Path to the directory where the configuration files are stored
+        git:
+          uri: "https://github.com/shadril238/spring-boot-microservices-eazybank-config.git"
+          default-label: "main"
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
 
 encrypt:
   key: "mySecretKeyShadril238"
 
 server:
-    port: 8071
+  port: 8071
