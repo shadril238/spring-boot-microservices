@@ -1,6 +1,6 @@
 services:
   configserver:
-    image: "shadril238/config-server:s8"
+    image: "shadril238/config-server:s9"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -15,7 +15,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "shadril238/eureka-server:s8"
+    image: "shadril238/eureka-server:s9"
     container_name: eurekaserver-ms
     ports:
       - "8671:8671"
@@ -35,10 +35,16 @@ services:
       SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "shadril238/account-service:s8"
+    image: "shadril238/account-service:s9"
     container_name: accounts-ms
     ports:
       - "8080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       configserver:
         condition: service_healthy
@@ -51,10 +57,16 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "shadril238/loan-service:s8"
+    image: "shadril238/loan-service:s9"
     container_name: loans-ms
     ports:
       - "8090:8090"
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       configserver:
         condition: service_healthy
@@ -66,27 +78,33 @@ services:
       file: common-config.yml
       service: microservice-eureka-config
 
-  loans1:
-    image: "shadril238/loan-service:s8"
-    container_name: loans-ms1
-    ports:
-      - "8091:8090"
-    depends_on:
-      configserver:
-        condition: service_healthy
-      eurekaserver:
-        condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "loans"
-    extends:
-      file: common-config.yml
-      service: microservice-eureka-config
+  #  loans1:
+  #    image: "shadril238/loan-service:s9"
+  #    container_name: loans-ms1
+  #    ports:
+  #      - "8091:8090"
+  #    depends_on:
+  #      configserver:
+  #        condition: service_healthy
+  #      eurekaserver:
+  #        condition: service_healthy
+  #    environment:
+  #      SPRING_APPLICATION_NAME: "loans"
+  #    extends:
+  #      file: common-config.yml
+  #      service: microservice-eureka-config
 
   cards:
-    image: "shadril238/card-service:s8"
+    image: "shadril238/card-service:s9"
     container_name: cards-ms
     ports:
       - "9000:9000"
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     depends_on:
       configserver:
         condition: service_healthy
@@ -94,6 +112,24 @@ services:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  gatewayserver:
+    image: "shadril238/gateway-server:s9"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
