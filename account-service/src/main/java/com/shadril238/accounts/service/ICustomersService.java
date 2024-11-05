@@ -9,5 +9,5 @@ public interface ICustomersService {
      * @param mobileNumber - Input mobile number
      * @return CustomerDetailsDto based on the mobile number
      */
-    CustomerDetailsDto fetchCustomerDetails(String mobileNumber);
+    CustomerDetailsDto fetchCustomerDetails(String mobileNumber, String correlationId);
 }

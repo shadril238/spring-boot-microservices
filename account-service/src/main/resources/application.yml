@@ -69,3 +69,9 @@ info:
     name: "accounts"
     description: "Accounts Service for EazyBank"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      shadril238:
+        accounts: DEBUG
