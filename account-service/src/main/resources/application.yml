@@ -14,23 +14,23 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: ''
-
   h2:
     console:
       enabled: true
-
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
-
   sql:
     init:
       mode: always
-
   config:
     import: "optional:configserver:http://localhost:8071/"
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
 #  rabbitmq:
 #    host: "localhost"
@@ -83,3 +83,11 @@ logging:
     com:
       shadril238:
         accounts: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 5
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
