@@ -32,3 +32,11 @@ logging:
     com:
       shadril238:
         gateway_server: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 5
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
